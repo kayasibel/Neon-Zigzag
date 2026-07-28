@@ -47,8 +47,14 @@ namespace NeonZigzag
 
         static Mesh Grab(PrimitiveType type)
         {
+            // Preferred path: the built-in mesh directly. CreatePrimitive also attaches a
+            // collider, and since nothing else in the game touches Physics, managed stripping
+            // drops those classes from a player build and it logs an error.
+            var mesh = Resources.GetBuiltinResource<Mesh>(type == PrimitiveType.Cube ? "Cube.fbx" : "Sphere.fbx");
+            if (mesh != null) return mesh;
+
             var go = GameObject.CreatePrimitive(type);
-            var mesh = go.GetComponent<MeshFilter>().sharedMesh;
+            mesh = go.GetComponent<MeshFilter>().sharedMesh;
             go.SetActive(false);   // never let the scratch primitive render a frame
             Object.Destroy(go);
             return mesh;

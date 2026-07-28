@@ -16,7 +16,10 @@ namespace NeonZigzag
             Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 0;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
-            if (Application.isMobilePlatform) Screen.orientation = ScreenOrientation.Portrait;
+            // A mobile browser reports isMobilePlatform but cannot lock orientation outside
+            // fullscreen; the WebGL page handles its own portrait framing instead.
+            if (Application.isMobilePlatform && Application.platform != RuntimePlatform.WebGLPlayer)
+                Screen.orientation = ScreenOrientation.Portrait;
 
             // The default scene ships with a camera and a light; the game supplies its own.
             foreach (var cam in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))
