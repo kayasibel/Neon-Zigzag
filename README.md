@@ -1,5 +1,7 @@
 # Neon Zigzag
 
+**[▶ Play in your browser](https://kayasibel.github.io/Neon-Zigzag/)**
+
 An endless one-touch arcade game built in Unity 6 (URP). Tap to turn 90°, stay on the path,
 and decide at every fork whether to play it safe or cut into the gem lane.
 
@@ -57,7 +59,17 @@ value drives distance, scoring, tile recycling and generation lookahead.
 Unity **6000.3.6f1**. Portrait orientation, designed for touch; mouse and space bar work in
 the editor. Open the project and press Play — no scene setup required.
 
+### WebGL
+
+The `NeonPortrait` template locks the canvas to 9:16 and letterboxes it, so the portrait HUD
+stays correct in a desktop browser. Unity's **decompression fallback** must stay enabled:
+GitHub Pages serves static files without a `Content-Encoding` header, so a plain Brotli build
+would never finish loading.
+
+The published build lives on the `gh-pages` branch; `main` holds only the project.
+
 ## Status
 
-Core loop, difficulty curve and progression are implemented and verified in the editor.
-The HUD is laid out for portrait; a landscape canvas needs layout work before it looks right.
+Core loop, difficulty curve and progression are implemented and playable in the browser.
+The HUD is laid out for portrait — the WebGL page letterboxes to suit it, but a native
+landscape layout would still need work.
